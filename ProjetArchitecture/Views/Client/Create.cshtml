@@ -1,0 +1,107 @@
+﻿@using ProjetArchitecture.Models.BankModels
+@using ProjetArchitecture.Models.shared
+@model Client
+
+<div class="container">
+
+
+
+
+    <main>
+        <div class="py-5 text-center">
+            <h2>Ajouter un client</h2>
+            <p class="lead">Pour créer un client correctement, remplir tous les champs obligatoire</p>
+        </div>
+
+        <div class="row g-5">
+
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3">Client</h4>
+                <form asp-controller="Client" asp-action="CreateClient" class="needs-validation" novalidate method="post">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="firstName" class="form-label">Nom</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="" value="" required asp-for="Nom">
+                            <div class="invalid-feedback">
+                                Nom invalide.
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="lastName" class="form-label">Prénom</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="" value="" required asp-for="Prenom">
+                            <div class="invalid-feedback">
+                                Prénom invalide.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="username" class="form-label">Numéro carte identité</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text"></span>
+                                <input type="text" class="form-control" id="username" placeholder="CIN" required asp-for="NumCIN">
+                                <div class="invalid-feedback">
+                                    CIN invalide.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
+                            <input type="email" class="form-control" id="email" placeholder="you@example.com" asp-for="Mail">
+                            <div class="invalid-feedback">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address2" class="form-label">Numero téléphone <span class="text-muted">(Optional)</span></label>
+                            <input type="text" class="form-control" id="address2" placeholder="" asp-for="NumTel">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address" class="form-label">Addresse</label>
+                            <input type="text" class="form-control" id="address" placeholder="" required asp-for="Adresse">
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
+                        </div>
+
+
+                        <hr class="my-4">
+
+                        <h4 class="mb-3">Type Client</h4>
+
+                        <div class="my-3">
+
+
+                            
+                            <div class="form-check">
+                            <input id="credit" name="typeclient" type="radio" value="@EnumClientType.INDIVIDUEL" class="form-check-input"  required asp-for="ClientType" >
+                            <label class="form-check-label">Individu</label>
+                            </div>
+                            <div class="form-check">
+                            <input id="debit" name="typeclient" type="radio" value="@EnumClientType.ENTREPRISE"  class="form-check-input" required asp-for="ClientType">
+                            <label class="form-check-label" >Entreprise</label>
+                            </div>
+                           
+
+                        </div>
+
+                        
+
+                    </div>
+
+                    <div class="row gy-3">
+                    </div>
+
+                    <hr class="my-4">
+
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Enregistrer</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+
+</div>

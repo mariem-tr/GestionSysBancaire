@@ -1,0 +1,121 @@
+﻿@using ProjetArchitecture.Models.shared
+@model ProjetArchitecture.Models.ViewModes.ClientViewModel;
+  @if (ViewBag.DspMessage != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.DspMessage
+    </div>
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+<p>Liste des clients</p>
+<div class="card">
+    <br />
+    <div>
+        <form asp-controller="Client" asp-action="Index">
+            <div class="row">
+                <div class="col-md-4">
+                    <select name="Client" class=" form-control">
+                        <option value="Tous">Tous les clients</option>
+                        @foreach (var n in Model.ListClients)
+                        {
+                            <option value="@n.IdClient">@n.PrenomNom</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" value="@Model.NumCin" name="NumCin" class="col-md-4 form-control" />
+
+                </div>
+                <div class="col-md-4">
+                    <select name="ClientType" class="col-md-4 form-control">
+                        <option value="Tous">Tous les types</option>
+                        @foreach (var n in Enum.GetValues(typeof(EnumClientType)))
+                        {
+                            <option value="@n">@n.ToString()</option>
+                        }
+                    </select>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-6 form-group">
+                    <label for="example-date-input" class="col-form-label">Première Date..</label>
+                    <input class="flatpickr flatpickr-input  inputCustom dateFirst form-control " name="dateFirst" type="text" value="@ViewBag.dateFirst" placeholder="Première Date..">
+
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="example-date-input" class="col-form-label">Deuxième Date..</label>
+                    <input class="flatpickr flatpickr-input  inputCustom dateSecond form-control" name="dateSecond" type="text" value="@ViewBag.dateSecond" disabled="disabled">
+
+                </div>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-success">Chercher</button>
+        </form>
+    </div>
+
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Mail</th>
+            <th scope="col">NumTel</th>
+            <th scope="col">Adresse</th>
+            <th scope="col">Type de Client</th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model.ListClients)
+        {
+            <tr>
+                <th scope="row">@m.Nom</th>
+                <td>@m.Prenom</td>
+                <td>@m.Mail</td>
+                <td>@m.NumTel</td>
+                <td>@m.Adresse</td>
+                <td>@m.ClientType.ToString()</td>
+                <th>
+                    <a asp-controller="Client" asp-action="Edit" asp-route-idClient="@m.IdClient">Modifier</a> |
+                    <a asp-controller="Client" asp-action="DeleteClient" asp-route-idClient="@m.IdClient">Supprimer</a>|
+                    <a asp-controller="Client" asp-action="Details" asp-route-idClient="@m.IdClient">Détails</a>
+                </th>
+
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () { $(".dateFirst").flatpickr({
+               dateFormat: "d-m-Y",
+               onChange: function (parameters) {
+                   $(".dateSecond").prop("disabled", false);
+                   flatpickr(".dateSecond",
+                       {
+                           dateFormat: "d-m-Y",
+                           minDate: $(".dateFirst").val()
+                       });
+               }
+           });
+           $(".dateSecond").prop("disabled", false);
+           flatpickr(".dateSecond",
+               {
+                   dateFormat: "d-m-Y",
+                   minDate: $(".dateFirst").val()
+               });}
+
+</script>
